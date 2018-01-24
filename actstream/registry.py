@@ -1,11 +1,11 @@
 from inspect import isclass
 
+from django import VERSION as DJANGO_VERSION
 from django.apps import apps
-from django.contrib.contenttypes.fields import GenericRelation
+from django.utils.six import string_types
 from django.db.models.base import ModelBase
 from django.core.exceptions import ImproperlyConfigured
-from django.utils.six import string_types
-
+from django.contrib.contenttypes.fields import GenericRelation
 
 class RegistrationError(Exception):
     pass
@@ -27,7 +27,7 @@ def setup_generic_relations(model_class):
     related_attr_name = 'related_query_name'
     related_attr_value = 'actions_with_%s' % label(model_class)
 
-    if django.VERSION[:2] >= (1, 8):
+    if DJANGO_VERSION[:2] >= (1, 8):
         related_attr_name = 'related_query_name'
     relations = {}
     for field in ('actor', 'target', 'action_object'):

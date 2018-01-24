@@ -49,7 +49,8 @@ class GFKQuerySet(QuerySet):
         return qs.prefetch_related(*[g.name for g in gfk_fields])
 
     def none(self):
-        clone = self._clone(klass=EmptyGFKQuerySet)
+        clone = self._clone()
+        clone.__dict__['klass'] = EmptyGFKQuerySet
         if hasattr(clone.query, 'set_empty'):
             clone.query.set_empty()
         return clone
